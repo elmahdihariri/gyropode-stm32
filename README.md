@@ -6,18 +6,19 @@ with no RTOS.
 
 Embedded systems project – Master Automatique, Robotique (MARS), M1,
 Polytech Orléans, 2025/26.
-Team: El Mahdi Hariri, Adam Boukri, Lucas Gaudin – supervised by Dominique Nelson-Gruel.
+El Mahdi Hariri
 
-<!-- Add a line here about your own part of the work, e.g. "My part: ..." -->
+<img width="1036" height="1167" alt="image" src="https://github.com/user-attachments/assets/f674ed3f-7509-4e1b-b51a-c45bf167334f" />
 
-<p align="center">
-  <img src="docs/prototype.jpg" width="420" alt="Prototype: Nucleo-F401RE, sensors, L298N and motors">
-</p>
+
 
 ## How it works
 
 The robot is an inverted pendulum: on its own it falls. To stay upright the
 wheels have to move under the centre of mass, in the direction it is falling.
+
+
+ <img width="1939" height="1153" alt="image" src="https://github.com/user-attachments/assets/dac617ff-d7e7-4acc-aeb8-22dc58d546df" />
 
 ```
  MMA7660 (accel) ─┐                      ┌──────────────┐     ┌─────┐     ┌───────┐
@@ -26,6 +27,7 @@ wheels have to move under the centre of mass, in the direction it is falling.
                                          └──────────────┘        (TIM3 PWM, 1 kHz)
 ```
 
+
 Everything runs in a 100 Hz loop (every 10 ms):
 
 1. **Read the IMU** over I2C.
@@ -33,9 +35,8 @@ Everything runs in a 100 Hz loop (every 10 ms):
 3. **Compute the motor command** with a PID on θ (setpoint = 0°).
 4. **Drive the motors**: PWM duty cycle on the L298N enable pins, direction on IN1/IN2.
 
-<p align="center">
-  <img src="docs/architecture.png" width="650" alt="System architecture: sensors, STM32, L298N, motors and power supplies">
-</p>
+<img width="1963" height="1063" alt="image" src="https://github.com/user-attachments/assets/f6e5e6e6-6a8d-4a91-8e62-225fce0ceb72" />
+
 
 ### Angle estimation
 
@@ -45,21 +46,19 @@ Neither sensor is good enough on its own:
   but it is noisy and disturbed every time the robot accelerates;
 - the **gyroscope** is smooth, but integrating its rate drifts over time.
 
-The complementary filter combines both:
+<img width="1978" height="1071" alt="image" src="https://github.com/user-attachments/assets/61e82353-f3b2-4b88-ac50-7ba4bd10e21b" />
 
-```
-θ = α · (θ + ω_gyro · dt) + (1 − α) · θ_accel        with α = 0.98
-```
-
-In practice it is a high-pass filter on the gyro and a low-pass filter on the
-accelerometer. With dt = 10 ms the time constant is about 0.5 s.
 
 Sensor conversions:
+<img width="1991" height="1081" alt="image" src="https://github.com/user-attachments/assets/9c3e1e23-174c-4072-8146-564b96c9f800" />
+<img width="1956" height="1106" alt="image" src="https://github.com/user-attachments/assets/4d60f5c7-8c7f-4b4c-b8d7-83f5c8c68f64" />
 
 ```
 a [g]   = (raw − offset) / 21          (MMA7660: 21 LSB = 1 g)
 ω [°/s] = (raw − offset) / 14.375      (ITG-3200, ±2000 °/s range)
 ```
+
+
 
 ### Control
 
@@ -70,6 +69,8 @@ a [g]   = (raw − offset) / 21          (MMA7660: 21 LSB = 1 g)
   any non-zero command smaller than that is raised to 30 %.
 - **Fall detection**: beyond 45° the motors are cut. The loop restarts on its
   own when the robot is put back upright (|θ| < 5°).
+
+  
 
 ## Hardware
 
@@ -116,9 +117,9 @@ moving to the next:
 Debug tools: STM32CubeMonitor (live plots of the variables), Tera Term (UART
 output), and an oscilloscope for the PWM.
 
-| PWM on the oscilloscope | Accelerometer in CubeMonitor | Fused signals in CubeMonitor |
-|---|---|---|
-| <img src="docs/pwm_oscilloscope.jpg" width="260"> | <img src="docs/accelerometer_cubemonitor.png" width="260"> | <img src="docs/fusion_cubemonitor.png" width="260"> |
+| PWM on the oscilloscope | Accelerometer in CubeMonitor | Fused signals in CubeMonitor | 
+
+<img width="869" height="1041" alt="image" src="https://github.com/user-attachments/assets/33bfd260-fb9e-469b-b6b1-c8f5a47c4b0e" />
 
 ## Code structure
 
