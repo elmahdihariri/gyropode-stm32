@@ -1,5 +1,3 @@
-# gyropode-stm32 
-
 # Gyropode – self-balancing robot on STM32
 
 Prototype of a two-wheeled self-balancing robot (inverted pendulum), built on an
@@ -8,12 +6,13 @@ with no RTOS.
 
 Embedded systems project – Master Automatique, Robotique (MARS), M1,
 Polytech Orléans, 2025/26.
-El Mahdi Hariri
+Team: El Mahdi Hariri, Adam Boukri, Lucas Gaudin – supervised by Dominique Nelson-Gruel.
 
-<img width="1036" height="1167" alt="image" src="https://github.com/user-attachments/assets/1b1f9b3c-aad9-4540-a174-069342ba9f0f" /> 
+<!-- Add a line here about your own part of the work, e.g. "My part: ..." -->
 
-<img width="1568" height="784" alt="image" src="https://github.com/user-attachments/assets/94e88ff7-88c4-4532-b723-cf4d33640946" />
-
+<p align="center">
+  <img src="docs/prototype.jpg" width="420" alt="Prototype: Nucleo-F401RE, sensors, L298N and motors">
+</p>
 
 ## How it works
 
